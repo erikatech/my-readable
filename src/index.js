@@ -16,7 +16,7 @@ ReactDOM.render(
 		  <div>
 			  <Header />
 			  <Switch>
-				  <Route exact path="/new" component={NewPostContainer}/>
+				  <Route exact path="/new/:postId?" component={NewPostContainer}/>
 				  <Route exact path="/:category/comment/:postId" component={CommentContainer}/>
 				  <Route path="/:category?" component={HomeContainer}/>
 			  </Switch>
