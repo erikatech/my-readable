@@ -11,17 +11,17 @@ const headers = {
 };
 
 export const getCategories = () =>
-  fetch(`${api}/categories`, { headers })
+  fetch(`${api}/categories`, {headers})
 	.then(res => res.json())
 	.then(data => data.categories);
 
 export const getPostsFromCategory = (category) =>
-  fetch(`${api}/${category}/posts`, { headers })
+  fetch(`${api}/${category}/posts`, {headers})
 	.then(res => res.json())
 	.then(data => data);
 
 export const getPosts = () =>
-  fetch(`${api}/posts`, { headers })
+  fetch(`${api}/posts`, {headers})
 	.then(res => res.json())
 	.then(data => data);
 
@@ -32,30 +32,31 @@ export const vote = (id, option) =>
 		  ...headers,
 		  'Content-Type': 'application/json'
 	  },
-	  body: JSON.stringify({ option })
+	  body: JSON.stringify({option})
   }).then(res => res.json());
 
 export const getSinglePost = (postId) =>
-  fetch(`${api}/posts/${postId}`, { headers })
+  fetch(`${api}/posts/${postId}`, {headers})
 	.then(res => res.json())
 	.then(data => data);
 
 
 export const getComments = (postId) =>
-  fetch(`${api}/posts/${postId}/comments`, { headers })
+  fetch(`${api}/posts/${postId}/comments`, {headers})
 	.then(res => res.json())
 	.then(data => data);
 
 
 export const comment = (comment) =>
-  fetch(`${api}/comments`, {
-	  method: 'POST',
-	  headers: {
-		  ...headers,
-		  'Content-Type': 'application/json'
-	  },
-	  body: JSON.stringify(comment)
-  }).then(res => res.json());
+	fetch(`${api}/comments`, {
+		method: 'POST',
+		headers: {
+			...headers,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(comment)
+	}).then(res => res.json());
+
 
 export const voteComment = (commentId, option) =>
   fetch(`${api}/comments/${commentId}`, {
@@ -86,15 +87,26 @@ export const removeComment = (commentId) =>
 	  }
   }).then(res => res.json())
 
+export const sendPost = (post) =>
+	fetch(`${api}/posts`, {
+		method: 'POST',
+		headers: {
+			...headers,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(post)
+	}).then(res => res.json())
 
 
-export const search = (query, maxResults) =>
-  fetch(`${api}/search`, {
-	  method: 'POST',
+export const updatePost = (post) =>
+  fetch(`${api}/posts/${post.id}`, {
+	  method: 'PUT',
 	  headers: {
 		  ...headers,
 		  'Content-Type': 'application/json'
 	  },
-	  body: JSON.stringify({ query, maxResults })
+	  body: JSON.stringify(post)
   }).then(res => res.json())
-	.then(data => data.books)
+
+
+
