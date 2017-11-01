@@ -35,6 +35,13 @@ function receiveSinglePost(currentPost){
 	}
 }
 
+export function orderPosts(field){
+	return {
+		type: "ORDER_POSTS",
+		field
+	}
+}
+
 
 export function fetchPosts() {
 	return dispatch => {
