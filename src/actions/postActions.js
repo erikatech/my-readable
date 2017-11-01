@@ -21,14 +21,15 @@ function receivePosts(posts) {
 	}
 }
 
-function didVote(updatedPost) {
+export function didVote(updatedPost) {
 	return {
 		type: 'DID_VOTE',
 		updatedPost
 	}
 }
 
-function receiveSinglePost(currentPost){
+
+export function receiveSinglePost(currentPost){
 	return {
 		type: 'RECEIVE_SINGLE_POST',
 		currentPost
@@ -61,10 +62,10 @@ export function fetchPostsByCategory(category) {
 	}
 }
 
-export function doVoteRequest(postId, option) {
+export function doVoteRequest(postId, option, fn) {
 	return dispatch => {
 		return ReadableAPI.vote(postId, option)
-		  .then((updatedPost) => dispatch(didVote(updatedPost)));
+		  .then((updatedPost) => dispatch(fn(updatedPost)))
 	}
 }
 
