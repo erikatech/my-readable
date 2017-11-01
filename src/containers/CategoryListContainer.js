@@ -3,7 +3,6 @@ import CategoryList from "../presentational/CategoryList";
 import {fetchCategories} from "../actions/categoryActions";
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
-import {push} from "react-router-redux";
 
 class CategoryListContainer extends Component {
 
@@ -16,7 +15,7 @@ class CategoryListContainer extends Component {
 		return (
 		  <CategoryList
 		    selectedCategory={selectedCategory}
-		    selectCategory={ this.props.selectCategory }
+		    selectCategory={this.props.selectCategory}
 		    categories={ this.props.categories }
 		  />
 		)
@@ -31,8 +30,7 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
 	return {
-		requestCategories: () => dispatch(fetchCategories()),
-		selectCategory: (selectedCategory) => dispatch(push(`/${selectedCategory}`))
+		requestCategories: () => dispatch(fetchCategories())
 	}
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategoryListContainer));
