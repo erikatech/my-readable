@@ -1,11 +1,16 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
-const PostActionButtons = ({post, comment, edit, remove}) => {
+const PostActionButtons = ({post, remove}) => {
+
+	const urlToComment = `/${post.category}/comment/${post.id}`;
+	const urlToEdit = `/new/${post.id}`;
 
 	return (
+
 	  <div>
-		  <button onClick={() => comment(post)}>Comment</button>
-		  <button onClick={() => edit(post)}>Edit</button>
+		  <Link to={urlToComment}>{post.commentCount} comments </Link>
+		  <Link to={urlToEdit}>Edit</Link>
 		  <button onClick={() => remove(post)}>Remove</button>
 	  </div>
 	)
