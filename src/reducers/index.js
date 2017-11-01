@@ -44,18 +44,25 @@ function post(state = {isFetching: false, posts: []}, action) {
 					[action.updatedPost.id]: updatedPost
 				}
 			};
+
 		case "RECEIVE_SINGLE_POST":
 			return {
 				...state,
 				currentPost: action.currentPost
 			};
 		case "ORDER_POSTS":
+			const {posts} = state;
+			const {field} = action;
 			return {
 			  ...state,
-				posts: Object.keys(state.posts).sort(function(first, second){
-					const v1 = new Date(state.posts[first][action.field]);
-					const v2 = new Date(state.posts[second][action.field]);
+				posts: Object.keys(posts).sort(function(first, second){
+					let v1 = posts[first][field];
+					let v2 = posts[second][field];
 
+					if(field === 'timestamp'){
+						v1 = new Date(v1);
+						v2 = new Date(v2);
+					}
 					if(v1 > v2){
 						return -1;
 					}
@@ -65,7 +72,7 @@ function post(state = {isFetching: false, posts: []}, action) {
 					}
 					return 0;
 				}).reduce((acc, curr) => {
-					acc[curr] = state.posts[curr];
+					acc[curr] = posts[curr];
 					return acc;
 				}, {})
 			};
