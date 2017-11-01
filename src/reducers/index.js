@@ -18,10 +18,22 @@ function post(state = {isFetching: false, posts: []}, action) {
 			return {
 				...state,
 				isFetching: false,
-				posts: action.posts.reduce((acc, curr) => {
-					acc[curr.id] = curr;
-					return acc;
-				}, {})
+				posts: action.posts
+				  .sort(function (first, second) {
+					  if (first.voteScore > second.voteScore) {
+						  return -1;
+					  }
+
+					  if (first.voteScore < second.voteScore) {
+						  return 1;
+					  }
+
+					  return 0;
+				  })
+				  .reduce((acc, curr) => {
+					  acc[curr.id] = curr;
+					  return acc;
+				  }, {})
 			};
 		case "DID_VOTE":
 			const {updatedPost} = action;
@@ -37,6 +49,26 @@ function post(state = {isFetching: false, posts: []}, action) {
 				...state,
 				currentPost: action.currentPost
 			};
+		case "ORDER_POSTS":
+			return {
+			  ...state,
+				posts: Object.keys(state.posts).sort(function(first, second){
+					const v1 = new Date(state.posts[first][action.field]);
+					const v2 = new Date(state.posts[second][action.field]);
+
+					if(v1 > v2){
+						return -1;
+					}
+
+					if(v1 < v2){
+						return 1;
+					}
+					return 0;
+				}).reduce((acc, curr) => {
+					acc[curr] = state.posts[curr];
+					return acc;
+				}, {})
+			};
 		default:
 			return state;
 	}
@@ -48,7 +80,17 @@ function comment(state = {comments: [], isEditing: false}, action) {
 			return {
 				...state,
 				comments: action.comments
-				  .filter(comment => !comment.deleted)
+				  .sort(function (first, second) {
+					  if (first.voteScore > second.voteScore) {
+						  return -1;
+					  }
+
+					  if (first.voteScore < second.voteScore) {
+						  return 1;
+					  }
+
+					  return 0;
+				  })
 				  .reduce((acc, curr) => {
 					  acc[curr.id] = curr;
 					  return acc;

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
-import {doVoteRequest, fetchPosts, fetchPostsByCategory} from "../actions/postActions";
+import {doVoteRequest, fetchPosts, fetchPostsByCategory, orderPosts} from "../actions/postActions";
 import Post from "../presentational/Post";
 
 class HomeContainer extends Component {
@@ -30,6 +30,13 @@ class HomeContainer extends Component {
 		const {posts} = this.props;
 		return (
 		  <div>
+			  My Posts
+
+			  <div onChange={(e) => this.props.onOrder(e.target.value)}>
+				  <input type="radio" value="voteScore" name="order" defaultChecked/> Upvoted
+				  <input type="radio" value="timestamp" name="order"/> Recently
+			  </div>
+
 			  <ul>
 				  {Object.keys(posts).map((key, index) => (
 				    <Post key={posts[key].id} post={posts[key]} onVote={this.props.onVote}/>
@@ -50,7 +57,8 @@ function mapDispatchToProps(dispatch) {
 	return {
 		requestPosts: () => dispatch(fetchPosts()),
 		requestPostsFromCategory: (selectedCategory) => dispatch(fetchPostsByCategory(selectedCategory)),
-		onVote: (option, post) => dispatch(doVoteRequest(post.id, option))
+		onVote: (option, post) => dispatch(doVoteRequest(post.id, option)),
+		onOrder: (field) => dispatch(orderPosts(field))
 	}
 }
 
