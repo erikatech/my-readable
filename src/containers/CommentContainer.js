@@ -1,10 +1,11 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
-import {getSinglePost} from "../actions/postActions";
+import {doVoteRequest, getSinglePost, receiveSinglePost } from "../actions/postActions";
 import {sendComment} from "../actions/commentActions";
 import {generateUUID} from "../utils/UUIDGenerator";
 import SingleCommentContainer from "./SingleCommentContainer";
+import Vote from "../presentational/Vote";
 
 class CommentContainer extends Component {
 
@@ -45,6 +46,8 @@ class CommentContainer extends Component {
 		  <div>
 			  {currentPost && (
 				<div>
+					<Vote voteScore={currentPost.voteScore} onVote={(option) => this.props.onVote(option, currentPost)}/>
+
 					<h2>{currentPost.title}</h2>
 					<p>{currentPost.body}</p>
 					<span>{Object.keys(comments).length} comments </span>
@@ -83,7 +86,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return {
 		getSinglePost: (postId) => dispatch(getSinglePost(postId)),
-		sendComment: (comment) => dispatch(sendComment(comment))
+		sendComment: (comment) => dispatch(sendComment(comment)),
+		onVote: (option, post) => dispatch(doVoteRequest(post.id, option, receiveSinglePost))
 	}
 }
 
