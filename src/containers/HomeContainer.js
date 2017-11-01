@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
-import {doVoteRequest, fetchPosts, fetchPostsByCategory, orderPosts} from "../actions/postActions";
+import {didVote, doVoteRequest, fetchPosts, fetchPostsByCategory, orderPosts} from "../actions/postActions";
 import Post from "../presentational/Post";
 
 class HomeContainer extends Component {
@@ -57,7 +57,7 @@ function mapDispatchToProps(dispatch) {
 	return {
 		requestPosts: () => dispatch(fetchPosts()),
 		requestPostsFromCategory: (selectedCategory) => dispatch(fetchPostsByCategory(selectedCategory)),
-		onVote: (option, post) => dispatch(doVoteRequest(post.id, option)),
+		onVote: (option, post) => dispatch(doVoteRequest(post.id, option, didVote)),
 		onOrder: (field) => dispatch(orderPosts(field))
 	}
 }
