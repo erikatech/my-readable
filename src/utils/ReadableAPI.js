@@ -1,6 +1,5 @@
 const api = "http://localhost:3001";
 
-// Generate a unique token for storing your bookshelf data on the backend server.
 let token = localStorage.token;
 if (!token)
 	token = localStorage.token = Math.random().toString(36).substr(-8);
@@ -106,6 +105,16 @@ export const updatePost = (post) =>
 		  'Content-Type': 'application/json'
 	  },
 	  body: JSON.stringify(post)
+  }).then(res => res.json())
+
+
+export const removePost = (postId) =>
+  fetch(`${api}/posts/${postId}`, {
+	  method: 'DELETE',
+	  headers: {
+		  ...headers,
+		  'Content-Type': 'application/json'
+	  }
   }).then(res => res.json())
 
 
