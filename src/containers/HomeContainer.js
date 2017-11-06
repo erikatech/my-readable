@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
-import {didVote, doVoteRequest, fetchPosts, fetchPostsByCategory, orderPosts} from "../actions/postActions";
+import {didVote, doVoteRequest, fetchPosts, fetchPostsByCategory, orderPosts, removePost} from "../actions/postActions";
 import Post from "../presentational/Post";
 
 class HomeContainer extends Component {
@@ -10,10 +10,10 @@ class HomeContainer extends Component {
 		this.getPosts(this.props.match.params.category);
 	}
 
-	componentWillReceiveProps(nextProps){
+	componentWillReceiveProps(nextProps) {
 		const currentCategory = this.props.match.params.category;
 		const nextCategory = nextProps.match.params.category;
-		if(nextCategory !== currentCategory){
+		if (nextCategory !== currentCategory) {
 			this.getPosts(nextCategory);
 		}
 	}
@@ -30,8 +30,6 @@ class HomeContainer extends Component {
 		const {posts} = this.props;
 		return (
 		  <div>
-			  My Posts
-
 			  <div onChange={(e) => this.props.onOrder(e.target.value)}>
 				  <input type="radio" value="voteScore" name="order" defaultChecked/> Upvoted
 				  <input type="radio" value="timestamp" name="order"/> Recently
@@ -39,7 +37,11 @@ class HomeContainer extends Component {
 
 			  <ul>
 				  {Object.keys(posts).map((key, index) => (
-				    <Post key={posts[key].id} post={posts[key]} onVote={this.props.onVote}/>
+					<Post key={posts[key].id}
+					      post={posts[key]}
+					      onVote={this.props.onVote}
+					      onRemove={this.props.onRemove}
+					/>
 				  ))}
 			  </ul>
 		  </div>
@@ -58,7 +60,8 @@ function mapDispatchToProps(dispatch) {
 		requestPosts: () => dispatch(fetchPosts()),
 		requestPostsFromCategory: (selectedCategory) => dispatch(fetchPostsByCategory(selectedCategory)),
 		onVote: (option, post) => dispatch(doVoteRequest(post.id, option, didVote)),
-		onOrder: (field) => dispatch(orderPosts(field))
+		onOrder: (field) => dispatch(orderPosts(field)),
+		onRemove: (post) => dispatch(removePost(post.id))
 	}
 }
 
