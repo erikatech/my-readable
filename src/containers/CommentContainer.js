@@ -2,43 +2,16 @@ import React, {Component} from "react";
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
 import {doVoteRequest, getSinglePost, receiveSinglePost } from "../actions/postActions";
-import {sendComment} from "../actions/commentActions";
-import {generateUUID} from "../utils/UUIDGenerator";
 import SingleCommentContainer from "./SingleCommentContainer";
-import Vote from "../presentational/Vote";
+import Post from "../presentational/Post";
+import CommentFormContainer from "./CommentFormContainer";
 
 class CommentContainer extends Component {
 
 	componentDidMount() {
 		const {postId} = this.props.match.params;
-		this.setState({comment: {}});
 		this.props.getSinglePost(postId);
 	}
-
-	prepareComment = () => {
-		const {comment} = this.state;
-		comment.timestamp = new Date().getTime();
-		comment.parentId = this.props.currentPost.id;
-		comment.id = generateUUID();
-		this.props.sendComment(comment);
-	};
-
-	componentWillReceiveProps() {
-		this.setState({comment: {}});
-	}
-
-	handleAuthorChange = (value) => {
-		const {comment} = this.state;
-		comment.author = value;
-		this.setState({comment});
-	};
-
-	handleBodyChange = (value) => {
-		const {comment} = this.state;
-		comment.body = value;
-		this.setState({comment});
-	};
-
 
 	render() {
 		const {currentPost, comments} = this.props;
@@ -46,19 +19,13 @@ class CommentContainer extends Component {
 		  <div>
 			  {currentPost && (
 				<div>
-					<Vote voteScore={currentPost.voteScore} onVote={(option) => this.props.onVote(option, currentPost)}/>
-
-					<h2>{currentPost.title}</h2>
-					<p>{currentPost.body}</p>
-					<span>{Object.keys(comments).length} comments </span>
-
+					<Post showBody={true}
+					      post={currentPost}
+					      commentsCount={Object.keys(comments).length}
+					      onVote={(option) => this.props.onVote(option, currentPost)} />
 					<br/>
 
-					<input type="text" onChange={(e) => this.handleAuthorChange(e.target.value)}/><br/>
-
-					<textarea onChange={(e) => this.handleBodyChange(e.target.value)} cols="30" rows="10"/><br/>
-
-					<input type="button" onClick={() => this.prepareComment()} value="Submit"/>
+					<CommentFormContainer postId={currentPost.id} />
 
 					<br/>
 
@@ -86,7 +53,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return {
 		getSinglePost: (postId) => dispatch(getSinglePost(postId)),
-		sendComment: (comment) => dispatch(sendComment(comment)),
 		onVote: (option, post) => dispatch(doVoteRequest(post.id, option, receiveSinglePost))
 	}
 }
