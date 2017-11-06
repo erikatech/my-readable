@@ -36,33 +36,30 @@ class SingleCommentContainer extends Component {
 		const { comment } = this.props;
 
 		return (
-		  <div>
+		  <div className="single-comment-container">
 			  <Vote voteScore={comment.voteScore}
 			        onVote={(option) => this.props.voteComment(comment, option)} />
 
-			  {isEditing && (<button onClick={() => this.setState({isEditing: false})}>cancel</button>)}
-
-
 			  {isEditing && (
-				<div>
-					<textarea onChange={(e) => this.handleCommentChange(e.target.value)}
-					          cols="30" rows="10" defaultValue={comment.body}/>
-				</div>
+			    <textarea onChange={(e) => this.handleCommentChange(e.target.value)}
+			              cols="30" rows="10" defaultValue={comment.body}/>
 			  )}
 
 			  {!isEditing && (
-			    <div>
-				    <p>{comment.body}</p>
-
+			    <div className="single-comment-content">
 				    <span>{comment.author}</span>
+				    <p>{comment.body}</p>
 				    <br/>
+
+
 			    </div>
 			  )}
 
-			  <button onClick={() => this.toggleEditing()}>{isEditing ? 'save' : 'edit'}</button>
-			  <button onClick={() => this.props.removeComment(comment)}>remove</button>
-
-			  <hr/>
+			  <div className="button-container">
+				  {isEditing && (<button onClick={() => this.setState({isEditing: false})}>cancel</button>)}
+				  <button onClick={() => this.toggleEditing()}>{isEditing ? 'save' : 'edit'}</button>
+				  <button onClick={() => this.props.removeComment(comment)}>remove</button>
+			  </div>
 		  </div>
 		)
 	}
