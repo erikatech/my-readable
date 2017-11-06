@@ -1,9 +1,9 @@
 import React from 'react';
 
 const Vote = ({voteScore, onVote}) =>
-  <div>
-	  <button onClick={() => onVote("upVote")}>+</button>
+  <div className="vote-container">
+	  <button className="upvote" onClick={() => onVote("upVote")}/>
 	  <span>{voteScore}</span>
-	  <button onClick={() => onVote("downVote")}>-</button>
+	  <button className="downvote" onClick={() => onVote("downVote")}/>
   </div>;
 export default Vote;
