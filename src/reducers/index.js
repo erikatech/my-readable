@@ -50,6 +50,17 @@ function post(state = {isFetching: false, posts: []}, action) {
 				...state,
 				currentPost: action.currentPost
 			};
+
+		case "UPDATE_POSTS_AFTER_REMOVAL":
+			return {
+				...state,
+				posts: Object.keys(state.posts)
+				  .filter((key) => key !== action.removedPost.id)
+				  .reduce((acc, curr) => {
+					  acc[curr] = state.posts[curr];
+					  return acc;
+				  }, {})
+			};
 		case "ORDER_POSTS":
 			const {posts} = state;
 			const {field} = action;
@@ -132,12 +143,6 @@ function category(state = {
 	isFetching: false
 }, action) {
 	switch (action.type) {
-		case "SELECT_CATEGORY":
-			const {selectedCategory} = action;
-			return {
-				...state,
-				selectedCategory
-			};
 		case "REQUEST_CATEGORIES":
 			return {
 				...state,
