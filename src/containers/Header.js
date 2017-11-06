@@ -9,12 +9,12 @@ class Header extends Component {
 
 	render() {
 		return (
-		  <div>
+		  <div className="header-container">
 			  <CategoryListContainer selectCategory={this.props.selectCategory} />
-			  <Link to="/">Home</Link> |
+			  <Link to="/">home</Link> |
 			  <Link
 				to="/new">
-				  submit new post
+				  new post
 			  </Link>
 		  </div>
 		);
