@@ -1,0 +1,17 @@
+.single-comment-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 15px 0; }
+  .single-comment-container .single-comment-content {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px; }
+    .single-comment-container .single-comment-content p {
+      margin: 0; }
+    .single-comment-container .single-comment-content .button-container {
+      display: flex;
+      flex-direction: row; }
+
+/*# sourceMappingURL=SingleComment.css.map */

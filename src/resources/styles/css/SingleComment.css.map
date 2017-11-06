@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,yBAA0B;EACxB,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,GAAG;EACnB,eAAe,EAAE,UAAU;EAC3B,WAAW,EAAE,MAAM;EACnB,MAAM,EAAE,MAAM;EAEd,iDAAwB;IACtB,OAAO,EAAE,IAAI;IACb,cAAc,EAAE,MAAM;IACtB,WAAW,EAAE,IAAI;IAEjB,mDAAE;MACA,MAAM,EAAE,CAAC;IAGX,mEAAkB;MAChB,OAAO,EAAE,IAAI;MACb,cAAc,EAAE,GAAG",
+"sources": ["../scss/SingleComment.scss"],
+"names": [],
+"file": "SingleComment.css"
+}

@@ -1,0 +1,15 @@
+.header-container {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid;
+  padding: 10px 0;
+  justify-content: flex-start;
+  align-items: center;
+
+
+  a {
+    margin: 0 20px;
+    font-family: robotoregular;
+    font-size: 16px;
+  }
+}

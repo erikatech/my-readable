@@ -1,0 +1,45 @@
+.post-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 15px 0;
+
+  .post-content {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+    h3, p {
+      margin: 0;
+    }
+
+    h3 {
+      font-family: robotobold;
+    }
+
+    p {
+      font-family: robotolight;
+      font-size: 14px;
+    }
+
+    a {
+      margin: 5px 10px 0 0;
+      font-family: robotoregular;
+      font-size: 12px;
+    }
+
+    button {
+      background: #F9816C;
+      border-radius: 3px;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      font-family: robotobold;
+      font-size: 12px;
+      color: #1B1017
+    }
+
+
+  }
+
+}

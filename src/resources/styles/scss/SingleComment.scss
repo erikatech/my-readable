@@ -1,0 +1,24 @@
+.single-comment-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 15px 0;
+
+  .single-comment-content {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+
+    p {
+      margin: 0;
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: row;
+    }
+
+  }
+
+}
