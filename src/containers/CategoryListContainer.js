@@ -11,7 +11,10 @@ class CategoryListContainer extends Component {
 	}
 
 	render(){
-		const selectedCategory = this.props.location.pathname.replace("/", "");
+		const selectedCategoryFromPath = this.props.location.pathname.replace("/", "");
+		const categoryIndex = this.props.categories.findIndex((category) => selectedCategoryFromPath === category.name);
+		const selectedCategory = categoryIndex < 0 ? "" : selectedCategoryFromPath;
+
 		return (
 		  <CategoryList
 		    selectedCategory={selectedCategory}
