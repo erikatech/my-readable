@@ -9,6 +9,7 @@ import NewPostContainer from "./containers/NewPostContainer";
 import Header from "./containers/Header";
 import store, { history } from "./configureStore";
 import CommentContainer from "./containers/CommentContainer";
+import './resources/styles/css/index.css';
 
 ReactDOM.render(
   <Provider store={store}>
