@@ -6,3 +6,11 @@ export function generateUUID(){
 		return r.toString(16);
 	});
 }
+
+export function convertToStringDate(timestamp){
+	const myDate = new Date(timestamp);
+	const day = myDate.getDay().toString();
+	const month = myDate.getMonth().toString();
+	const year = myDate.getFullYear().toString();
+	return day.concat("/").concat(month).concat("/").concat(year);
+}

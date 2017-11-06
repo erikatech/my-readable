@@ -21,6 +21,13 @@ function receivePosts(posts) {
 	}
 }
 
+function updatePostAfterRemoval(removedPost){
+	return {
+		type: "UPDATE_POSTS_AFTER_REMOVAL",
+		removedPost
+	}
+}
+
 export function didVote(updatedPost) {
 	return {
 		type: 'DID_VOTE',
@@ -40,6 +47,13 @@ export function orderPosts(field){
 	return {
 		type: "ORDER_POSTS",
 		field
+	}
+}
+
+export function removePost(post){
+	return dispatch => {
+		return ReadableAPI.removePost(post)
+		  .then((removedPost) => dispatch(updatePostAfterRemoval(removedPost)))
 	}
 }
 
