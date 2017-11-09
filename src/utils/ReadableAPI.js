@@ -36,7 +36,12 @@ export const vote = (id, option) =>
 
 export const getSinglePost = (postId) =>
   fetch(`${api}/posts/${postId}`, {headers})
-	.then(res => res.json())
+	.then(res => {
+		if(!res.ok){
+			throw Error("Couldn't get the post");
+		}
+		return res.json();
+	})
 	.then(data => data);
 
 
