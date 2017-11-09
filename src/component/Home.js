@@ -2,10 +2,9 @@ import React, {Component} from 'react';
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
 import {didVote, doVoteRequest, fetchPosts, fetchPostsByCategory, orderPosts, removePost} from "../actions/postActions";
-import Post from "../presentational/Post";
+import Post from "./Post";
 
-class HomeContainer extends Component {
-
+class Home extends Component {
 	componentDidMount() {
 		this.getPosts(this.props.match.params.category);
 	}
@@ -26,11 +25,16 @@ class HomeContainer extends Component {
 		}
 	};
 
+	vote = (option, post) => {
+		this.props.onVote(option, post);
+	};
+
 	render() {
-		const {posts} = this.props;
+		const {posts, onRemove, onOrder} = this.props;
 		return (
-		  <div>
-			  <div onChange={(e) => this.props.onOrder(e.target.value)}>
+		  <div className="home-container">
+
+			  <div onChange={(e) => onOrder(e.target.value)} className="order-container">
 				  <input type="radio" value="voteScore" name="order" defaultChecked/> Upvoted
 				  <input type="radio" value="timestamp" name="order"/> Recently
 			  </div>
@@ -39,8 +43,8 @@ class HomeContainer extends Component {
 				  {Object.keys(posts).map((key, index) => (
 					<Post key={posts[key].id}
 					      post={posts[key]}
-					      onVote={this.props.onVote}
-					      onRemove={this.props.onRemove}
+					      onVote={this.vote}
+					      onRemove={onRemove}
 					/>
 				  ))}
 			  </ul>
@@ -59,10 +63,12 @@ function mapDispatchToProps(dispatch) {
 	return {
 		requestPosts: () => dispatch(fetchPosts()),
 		requestPostsFromCategory: (selectedCategory) => dispatch(fetchPostsByCategory(selectedCategory)),
-		onVote: (option, post) => dispatch(doVoteRequest(post.id, option, didVote)),
+		onVote: (option, post) => {
+			dispatch(doVoteRequest(post.id, option, didVote))
+		},
 		onOrder: (field) => dispatch(orderPosts(field)),
 		onRemove: (post) => dispatch(removePost(post.id))
 	}
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));

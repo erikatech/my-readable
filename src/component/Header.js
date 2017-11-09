@@ -1,16 +1,20 @@
-import React, { Component } from 'react';
-import CategoryListContainer from "./CategoryListContainer";
+import React, {Component} from 'react';
+import CategoryListContainer from "../containers/CategoryListContainer";
 import {withRouter} from 'react-router';
 import {Link} from "react-router-dom";
-import {push} from "react-router-redux";
 import {connect} from "react-redux";
+import {fetchCategories} from "../actions/categoryActions";
 
 class Header extends Component {
+
+	componentDidMount() {
+		this.props.requestCategories();
+	}
 
 	render() {
 		return (
 		  <div className="header-container">
-			  <CategoryListContainer selectCategory={this.props.selectCategory} />
+			  <CategoryListContainer />
 			  <Link to="/">home</Link> |
 			  <Link
 				to="/new">
@@ -21,12 +25,11 @@ class Header extends Component {
 	}
 }
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
 	return {
-	  selectCategory: (selectedCategory) => dispatch(push(`/${selectedCategory}`))
+		requestCategories: () => dispatch(fetchCategories())
 	}
 }
-
 
 
 export default withRouter(connect(null, mapDispatchToProps)(Header));

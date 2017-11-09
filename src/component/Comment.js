@@ -2,11 +2,11 @@ import React, {Component} from "react";
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
 import {doVoteRequest, getSinglePost, receiveSinglePost } from "../actions/postActions";
-import SingleCommentContainer from "./SingleCommentContainer";
-import Post from "../presentational/Post";
-import CommentFormContainer from "./CommentFormContainer";
+import Post from "./Post";
+import SingleComment from "./SingleComment";
+import CommentForm from "./CommentForm";
 
-class CommentContainer extends Component {
+class Comment extends Component {
 
 	componentDidMount() {
 		const {postId} = this.props.match.params;
@@ -25,13 +25,13 @@ class CommentContainer extends Component {
 					      onVote={(option) => this.props.onVote(option, currentPost)} />
 					<br/>
 
-					<CommentFormContainer postId={currentPost.id} />
+					<CommentForm postId={currentPost.id} />
 
 					<br/>
 
 					<ul>
 						{Object.keys(comments).map((key, index) => (
-						  <SingleCommentContainer key={comments[key].id} comment={comments[key]}/>
+						  <SingleComment key={comments[key].id} comment={comments[key]}/>
 						))}
 					</ul>
 				</div>
@@ -57,4 +57,4 @@ function mapDispatchToProps(dispatch) {
 	}
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CommentContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Comment));

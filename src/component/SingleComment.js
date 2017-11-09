@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import {removeComment, updateCommentDetails, voteComment} from "../actions/commentActions";
-import Vote from "../presentational/Vote";
+import Vote from "./Vote";
 
-class SingleCommentContainer extends Component {
+class SingleComment extends Component {
 
 	constructor(props){
 		super(props);
@@ -40,25 +40,27 @@ class SingleCommentContainer extends Component {
 			  <Vote voteScore={comment.voteScore}
 			        onVote={(option) => this.props.voteComment(comment, option)} />
 
-			  {isEditing && (
-			    <textarea onChange={(e) => this.handleCommentChange(e.target.value)}
-			              cols="30" rows="10" defaultValue={comment.body}/>
-			  )}
+			  <div className="single-comment-content">
+				  {isEditing && (
+				    <textarea onChange={(e) => this.handleCommentChange(e.target.value)}
+				              cols="30" rows="10" defaultValue={comment.body}/>
+				  )}
 
-			  {!isEditing && (
-			    <div className="single-comment-content">
-				    <span>{comment.author}</span>
-				    <p>{comment.body}</p>
-				    <br/>
+				  {!isEditing && (
+				    <div className="comment-info">
+					    <span>{comment.author}</span>
+					    <p>{comment.body}</p>
+					    <br/>
+				    </div>
+				  )}
 
-
-			    </div>
-			  )}
-
-			  <div className="button-container">
-				  {isEditing && (<button onClick={() => this.setState({isEditing: false})}>cancel</button>)}
-				  <button onClick={() => this.toggleEditing()}>{isEditing ? 'save' : 'edit'}</button>
-				  <button onClick={() => this.props.removeComment(comment)}>remove</button>
+				  <div className="button-container">
+					  {isEditing && (<button className="blue-button"
+					                         onClick={() => this.setState({isEditing: false})}>cancel</button>)}
+					  <button className="blue-button"
+					          onClick={() => this.toggleEditing()}>{isEditing ? 'save' : 'edit'}</button>
+					  <button className="red-button" onClick={() => this.props.removeComment(comment)}>remove</button>
+				  </div>
 			  </div>
 		  </div>
 		)
@@ -73,4 +75,4 @@ function mapDispatchToProps(dispatch){
 	}
 }
 
-export default connect(null, mapDispatchToProps)(SingleCommentContainer);
+export default connect(null, mapDispatchToProps)(SingleComment);

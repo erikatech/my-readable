@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import CategoryList from "../presentational/CategoryList";
+import CategoryList from "./CategoryList";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import * as ReadableAPI from '../utils/ReadableAPI';
 import {generateUUID} from "../utils/AppUtils";
 import {getSinglePost} from "../actions/postActions";
 
-class NewPostContainer extends Component {
+class NewPost extends Component {
 
 	constructor(props) {
 		super(props);
@@ -109,7 +109,8 @@ class NewPostContainer extends Component {
 			  />
 			  <span className="error-message">{errorMessages['category']}</span><br/>
 
-			  <input type="button" onClick={this.sendPost} value="Submit"/>
+			  <input className="blue-button"
+			         type="button" onClick={this.sendPost} value="Submit"/>
 		  </div>
 		)
 	}
@@ -129,4 +130,4 @@ function mapDispatchToProps(dispatch){
 }
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewPostContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewPost));

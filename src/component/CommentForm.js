@@ -4,7 +4,7 @@ import {sendComment} from "../actions/commentActions";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 
-class CommentFormContainer extends Component {
+class CommentForm extends Component {
 
 	constructor(props){
 		super(props);
@@ -71,7 +71,8 @@ class CommentFormContainer extends Component {
 			    onChange={(e) => this.handleInputChange("body", e.target.value)} cols="15" rows="10"/>
 			  <span className="error-message">{errorMessages["body"]}</span><br/>
 
-			  <input type="button" onClick={() => this.prepareComment()} value="Send"/>
+			  <input className="blue-button"
+			         type="button" onClick={() => this.prepareComment()} value="Send"/>
 		  </div>
 		)
 	}
@@ -83,4 +84,4 @@ function mapDispatchToProps(dispatch) {
 	}
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(CommentFormContainer));
+export default withRouter(connect(null, mapDispatchToProps)(CommentForm));

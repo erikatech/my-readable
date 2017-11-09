@@ -26,7 +26,7 @@ const Post = ({post, onVote, showBody, commentsCount, onRemove}) => {
 				  <Link to={urlToEdit}>Edit</Link>
 
 				  {onRemove && (
-				    <button onClick={() => onRemove(post)}>Remove</button>
+				    <button className="red-button" onClick={() => onRemove(post)}>Remove</button>
 				  )}
 			  </div>
 		  </div>
