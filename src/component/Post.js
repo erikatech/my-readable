@@ -3,8 +3,21 @@ import Vote from "./Vote";
 import {Link} from "react-router-dom";
 import {convertToStringDate} from "../utils/AppUtils";
 
+/**
+ * Dumb component used to show a single post
+ * @param post the post to be rendered
+ * @param onVote the method used to vote a single post
+ * @param showBody necessary when we need to hide the post body (the Home page)
+ * @param commentsCount the comments amount of each post
+ * @param onRemove used to remove a post from the post list
+ * @returns {XML}
+ * @constructor
+ */
 const Post = ({post, onVote, showBody, commentsCount, onRemove}) => {
+	// link to the commentPage
 	const urlToComment = `/${post.category}/comment/${post.id}`;
+
+	// link to edit a post
 	const urlToEdit = `/new/${post.id}`;
 
 	return (

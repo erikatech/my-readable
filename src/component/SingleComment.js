@@ -3,30 +3,40 @@ import {connect} from "react-redux";
 import {removeComment, updateCommentDetails, voteComment} from "../actions/commentActions";
 import Vote from "./Vote";
 
+/**
+ * Represents a single comment
+ */
 class SingleComment extends Component {
 
 	constructor(props){
 		super(props);
+		// we have to control if the user is editing a comment
 		this.state = {
 			isEditing: false
 		}
 	}
 
 	componentWillReceiveProps(){
+		// resets the isEditing flag
 		this.setState({isEditing: false});
 	}
 
+	/**
+	 * responsible for updating the commentBody state object
+	 * @param commentValue
+	 */
 	handleCommentChange = (commentValue) => {
 		this.setState({commentBody: commentValue});
 	};
 
 	toggleEditing = () => {
+		// if the user is editing, this methods updates the comment
 		if(this.state.isEditing){
 			this.props.comment.timestamp = new Date().getTime();
 			this.props.comment.body = this.state.commentBody;
-
 			this.props.updateComment(this.props.comment)
 		} else {
+			// if the user is not editing, it only toggles the isEditing flag
 			this.setState({isEditing: !this.state.isEditing});
 		}
 	};
@@ -67,6 +77,11 @@ class SingleComment extends Component {
 	}
 }
 
+/**
+ *
+ * @param dispatch
+ * @returns {{voteComment: (function(*, *=): *), updateComment: (function(*=): *), removeComment: (function(*): *)}}
+ */
 function mapDispatchToProps(dispatch){
 	return {
 		voteComment: (comment, option) => dispatch(voteComment(comment.id, option)),

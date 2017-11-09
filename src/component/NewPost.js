@@ -1,57 +1,79 @@
 import React, {Component} from 'react';
-import CategoryList from "./CategoryList";
+import CategoryList from "../presentational/CategoryList";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import * as ReadableAPI from '../utils/ReadableAPI';
 import {generateUUID} from "../utils/AppUtils";
 import {getSinglePost} from "../actions/postActions";
 
+/**
+ * Represents the new post page as well as the editing post page
+ */
 class NewPost extends Component {
 
 	constructor(props) {
 		super(props);
+		// initializes the state objects
 		this.state = {
 			post: {title: "", author: "", body: "", category: ""},
-			errorMessages: {},
+			errorMessages: {},//controls the errorMessages from each post field
+			// not all fields from post will be validate. Eg.: id, parentId (in cases we are editing the post)
 			fieldsToValidate: ["title", "author", "body", "category"]
 		}
 	}
 
 	componentDidMount(){
+		// necessary when we are editing a post
 		const postId = this.props.match.params.postId;
 		if(postId){
 			this.props.getSinglePost(postId);
 		}
 	}
 
+	/**
+	 *
+	 * @param nextProps
+	 */
 	componentWillReceiveProps(nextProps){
+		// if we are editing a post, we set to store the currentPost, after getting a single
+		// post from API. If it exists, we set the current post inside our component state
 		if(nextProps.currentPost){
 			this.setState({post: nextProps.currentPost});
 		}
 
 	}
 
+	/**
+	 * handles each input change
+	 * @param key the post object key
+	 * @param value the input value
+	 */
 	handleInputChange = (key, value) => {
+		// here we update the corresponding post object property, according to the key
+		// and the input value
 		this.setState(state => {
 			state.post[key] = value;
 			return state;
 		})
 	};
 
+	/**
+	 * responsible for sending a post to the API
+	 */
 	sendPost = () => {
-		if(this.isFormValid()){
+		if(this.isFormValid()){ // sends the post only if it fills the required fields
 			const { post } = this.state;
 			post.timestamp = new Date().getTime();
 
-			if(post.id){
+			if(post.id){ // if the post has id, it means it's being updated
 				ReadableAPI.updatePost(post).then(() => {
-					this.props.history.goBack();
+					this.props.history.goBack();// after the updating we can goBack to previous path
 				});
-
-			} else {
-				post.id = post.id || generateUUID();
-				ReadableAPI.sendPost(post)
+			} else { //we are creating a new post
+				post.id = generateUUID(); // uses the util method to generate a new id
+				ReadableAPI.sendPost(post) // sends the post
 				  .then(() => {
+					// if it's succeed, we can update the post object, so the form fields are reset.
 					  this.setState({
 						  post: {
 							  id: "",
@@ -66,6 +88,10 @@ class NewPost extends Component {
 		}
 	};
 
+	/**
+	 * Validates the form fields
+	 * @returns {boolean}
+	 */
 	isFormValid = () => {
 		const {post, fieldsToValidate} = this.state;
 		fieldsToValidate.forEach((field) => {
@@ -116,6 +142,11 @@ class NewPost extends Component {
 	}
 }
 
+/**
+ *
+ * @param state
+ * @returns {{categories: (*|Array), currentPost: *}}
+ */
 function mapStateToProps(state) {
 	return {
 		categories: state.category.categories,
@@ -123,6 +154,11 @@ function mapStateToProps(state) {
 	}
 }
 
+/**
+ *
+ * @param dispatch
+ * @returns {{getSinglePost: (function(*=): *)}}
+ */
 function mapDispatchToProps(dispatch){
 	return {
 		getSinglePost: (postId) => dispatch(getSinglePost(postId))
