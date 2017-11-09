@@ -4,12 +4,12 @@ import {Provider} from 'react-redux';
 import {Route, Switch} from 'react-router';
 import { ConnectedRouter } from 'react-router-redux'
 import registerServiceWorker from './registerServiceWorker';
-import HomeContainer from "./containers/HomeContainer";
-import NewPostContainer from "./containers/NewPostContainer";
-import Header from "./containers/Header";
+import Header from "./component/Header";
 import store, { history } from "./configureStore";
-import CommentContainer from "./containers/CommentContainer";
 import './resources/styles/css/index.css';
+import Home from "./component/Home";
+import Comment from "./component/Comment";
+import NewPost from "./component/NewPost";
 
 ReactDOM.render(
   <Provider store={store}>
@@ -17,9 +17,9 @@ ReactDOM.render(
 		  <div>
 			  <Header />
 			  <Switch>
-				  <Route exact path="/new/:postId?" component={NewPostContainer}/>
-				  <Route exact path="/:category/comment/:postId" component={CommentContainer}/>
-				  <Route path="/:category?" component={HomeContainer}/>
+				  <Route path="/new/:postId?" component={NewPost}/>
+				  <Route path="/:category/comment/:postId" component={Comment}/>
+				  <Route path="/:category?" component={Home}/>
 			  </Switch>
 		  </div>
 	  </ConnectedRouter>
