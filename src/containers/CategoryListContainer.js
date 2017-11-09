@@ -1,39 +1,23 @@
-import React, { Component } from 'react';
+/**
+ * Container used to fetch the categories and map it to CategoryList props, as
+ * well as the selectedCategory, which we get from the state.routing location params
+ */
 import CategoryList from "../presentational/CategoryList";
-import {fetchCategories} from "../actions/categoryActions";
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
+import {push} from "react-router-redux";
 
-class CategoryListContainer extends Component {
-
-	componentDidMount(){
-		this.props.requestCategories();
-	}
-
-	render(){
-		const selectedCategoryFromPath = this.props.location.pathname.replace("/", "");
-		const categoryIndex = this.props.categories.findIndex((category) => selectedCategoryFromPath === category.name);
-		const selectedCategory = categoryIndex < 0 ? "" : selectedCategoryFromPath;
-
-		return (
-		  <CategoryList
-		    selectedCategory={selectedCategory}
-		    selectCategory={this.props.selectCategory}
-		    categories={ this.props.categories }
-		  />
-		)
-	}
-}
-
-function mapStateToProps(state){
+const mapStateToProps = (state) => {
 	return {
-		categories: state.category.categories
+		categories: state.category.categories,
+		selectedCategory: state.routing.location.pathname.replace("/", "")
 	};
-}
+};
 
 function mapDispatchToProps(dispatch){
 	return {
-		requestCategories: () => dispatch(fetchCategories())
+		selectCategory: (selectedCategory) => dispatch(push(`/${selectedCategory}`)),
 	}
 }
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategoryListContainer));
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategoryList));
