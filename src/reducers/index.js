@@ -1,6 +1,12 @@
 import {combineReducers} from "redux";
 import {routerReducer} from 'react-router-redux';
 
+/**
+ * deals only with post actions
+ * @param state
+ * @param action
+ * @returns {*}
+ */
 function post(state = {isFetching: false, posts: []}, action) {
 	switch (action.type) {
 		case "REQUEST_POSTS":
@@ -18,24 +24,15 @@ function post(state = {isFetching: false, posts: []}, action) {
 			return {
 				...state,
 				isFetching: false,
+				sortField: 'voteScore', //initially we always order by voteScore
 				posts: action.posts
-				  .sort(function (first, second) {
-					  if (first.voteScore > second.voteScore) {
-						  return -1;
-					  }
-
-					  if (first.voteScore < second.voteScore) {
-						  return 1;
-					  }
-
-					  return 0;
-				  })
 				  .reduce((acc, curr) => {
 					  acc[curr.id] = curr;
 					  return acc;
 				  }, {})
 			};
 		case "DID_VOTE":
+			//when a user votes a post, we need to update it after the request is succeed
 			const {updatedPost} = action;
 			return {
 				...state,
@@ -50,65 +47,39 @@ function post(state = {isFetching: false, posts: []}, action) {
 				...state,
 				currentPost: action.currentPost
 			};
-
 		case "UPDATE_POSTS_AFTER_REMOVAL":
+			// we need to remove the post from the store after the request is succeed
+			const postsClone = {...state.posts};
+			delete postsClone[action.removedPost.id];
 			return {
 				...state,
-				posts: Object.keys(state.posts)
-				  .filter((key) => key !== action.removedPost.id)
-				  .reduce((acc, curr) => {
-					  acc[curr] = state.posts[curr];
-					  return acc;
-				  }, {})
+				posts: postsClone
 			};
 		case "ORDER_POSTS":
-			const {posts} = state;
-			const {field} = action;
+			// we only have to update which field the user is sorting by
+		    // the sorting stuff is being done inside the mapStateToProps of Home component
+			const {sortField} = action;
 			return {
-			  ...state,
-				posts: Object.keys(posts).sort(function(first, second){
-					let v1 = posts[first][field];
-					let v2 = posts[second][field];
-
-					if(field === 'timestamp'){
-						v1 = new Date(v1);
-						v2 = new Date(v2);
-					}
-					if(v1 > v2){
-						return -1;
-					}
-
-					if(v1 < v2){
-						return 1;
-					}
-					return 0;
-				}).reduce((acc, curr) => {
-					acc[curr] = posts[curr];
-					return acc;
-				}, {})
+				...state,
+				sortField
 			};
 		default:
 			return state;
 	}
 }
 
+/**
+ * deals with comments actions
+ * @param state
+ * @param action
+ * @returns {*}
+ */
 function comment(state = {comments: [], isEditing: false}, action) {
 	switch (action.type) {
 		case "RECEIVE_COMMENTS":
 			return {
 				...state,
 				comments: action.comments
-				  .sort(function (first, second) {
-					  if (first.voteScore > second.voteScore) {
-						  return -1;
-					  }
-
-					  if (first.voteScore < second.voteScore) {
-						  return 1;
-					  }
-
-					  return 0;
-				  })
 				  .reduce((acc, curr) => {
 					  acc[curr.id] = curr;
 					  return acc;
@@ -124,20 +95,24 @@ function comment(state = {comments: [], isEditing: false}, action) {
 				}
 			};
 		case "UPDATE_AFTER_REMOVAL":
+			// we need to remove the comment from the store after the request is succeed
+			const commentsClone = {...state.comments};
+			delete commentsClone[action.comment.id];
 			return {
 				...state,
-				comments: Object.keys(state.comments)
-				  .filter((key) => key !== action.commentId)
-				  .reduce((acc, curr) => {
-					  acc[curr] = state.comments[curr];
-					  return acc;
-				  }, {})
+				comments: commentsClone
 			};
 		default:
 			return state;
 	}
 }
 
+/**
+ * deals with category actions
+ * @param state
+ * @param action
+ * @returns {*}
+ */
 function category(state = {
 	categories: [],
 	isFetching: false
