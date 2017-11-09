@@ -26,18 +26,14 @@
     font-size: 16px;
   }
 
-  input[type="button"]{
-    width: 120px;
-    border-radius: 5px;
-    outline: none;
-    background: #E4F2FB;
+  .blue-button {
+    width: 160px;
     height: 30px;
-    cursor: pointer;
-    border: 1px solid #5F99CF;
-    font-family: robotobold;
   }
 
-  input[type="button"]:active {
-    background-color: #cee3f8;
-  }
+
+
+
+
+
 }

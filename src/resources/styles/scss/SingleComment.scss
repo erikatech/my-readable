@@ -17,6 +17,21 @@
     .button-container {
       display: flex;
       flex-direction: row;
+      margin-top: 10px;
+
+      button {
+        margin: 0 5px;
+      }
+    }
+
+    .comment-info {
+      span {
+        font-family: robotobold;
+      }
+
+      p {
+        font-family: robotolight;
+      }
     }
 
   }

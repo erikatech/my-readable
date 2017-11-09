@@ -1,0 +1,15 @@
+.home-container {
+  ul {
+    padding-left: 0;
+  }
+
+  .order-container {
+    margin-top: 15px;
+    font-family: robotolight;
+    font-size: 16px;
+
+    input[type="radio"] {
+      cursor: pointer;
+    }
+  }
+}
