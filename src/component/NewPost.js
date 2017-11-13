@@ -3,7 +3,7 @@ import CategoryList from "../presentational/CategoryList";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import * as ReadableAPI from '../utils/ReadableAPI';
-import {generateUUID} from "../utils/AppUtils";
+import generateUUID from 'uuid/v1';
 import {getSinglePost} from "../actions/postActions";
 
 /**
