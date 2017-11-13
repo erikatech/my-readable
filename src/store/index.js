@@ -6,7 +6,7 @@ import thunkMiddleware from 'redux-thunk';
 
 import { routerMiddleware} from 'react-router-redux'
 
-import reducer from './reducers';
+import reducer from '../reducers/index';
 
 export const history = createHistory();
 
