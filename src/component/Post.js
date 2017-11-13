@@ -15,7 +15,7 @@ import {convertToStringDate} from "../utils/AppUtils";
  */
 const Post = ({post, onVote, showBody, commentsCount, onRemove}) => {
 	// link to the commentPage
-	const urlToComment = `/${post.category}/comment/${post.id}`;
+	const urlToComment = `/${post.category}/${post.id}`;
 
 	// link to edit a post
 	const urlToEdit = `/new/${post.id}`;
