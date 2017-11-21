@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
-import {doVoteRequest, getSinglePost, receiveSinglePost } from "../actions/postActions";
-import Post from "./Post";
+import {doVoteRequest, getSinglePost, receiveSinglePost } from "../../actions/post/postActions";
+import Post from "../post/Post";
 import SingleComment from "./SingleComment";
 import CommentForm from "./CommentForm";
 

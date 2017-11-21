@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
-import {removeComment, updateCommentDetails, voteComment} from "../actions/commentActions";
-import Vote from "./Vote";
+import {removeComment, updateCommentDetails, voteComment} from "../../actions/comment/commentActions";
+import Vote from "../vote/Vote";
 
 /**
  * Represents a single comment

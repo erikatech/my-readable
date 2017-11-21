@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import generateUUID from 'uuid/v1';
-import {sendComment} from "../actions/commentActions";
+import {sendComment} from "../../actions/comment/commentActions";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
 

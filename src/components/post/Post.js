@@ -1,7 +1,7 @@
 import React from 'react';
-import Vote from "./Vote";
+import Vote from "../vote/Vote";
 import {Link} from "react-router-dom";
-import {convertToStringDate} from "../utils/AppUtils";
+import {convertToStringDate} from "../../utils/AppUtils";
 
 /**
  * Dumb component used to show a single post

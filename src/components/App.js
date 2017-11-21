@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import Header from "./Header";
+import Header from "./header/Header";
 import {Route, Switch, withRouter} from "react-router-dom";
-import NewPost from "./NewPost";
-import Home from "./Home";
-import Comment from "./Comment";
-import {fetchCategories} from "../actions/categoryActions";
+import NewPost from "./post/NewPost";
+import Home from "./home/Home";
+import Comment from "./comment/Comment";
+import {fetchCategories} from "../actions/category/categoryActions";
 import {connect} from "react-redux";
 
 /**

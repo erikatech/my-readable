@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
-import {didVote, doVoteRequest, fetchPosts, fetchPostsByCategory, orderPosts, removePost} from "../actions/postActions";
-import Post from "./Post";
+import {didVote, doVoteRequest, fetchPosts, fetchPostsByCategory, orderPosts, removePost} from "../../actions/post/postActions";
+import Post from "../post/Post";
 
 /**
  * Represents the main page

@@ -1,5 +1,5 @@
-import * as ReadableAPI from '../utils/ReadableAPI';
-import {getComments} from "./commentActions";
+import * as ReadableAPI from '../../utils/ReadableAPI';
+import {getComments} from "../comment/commentActions";
 import {push} from "react-router-redux";
 
 /**

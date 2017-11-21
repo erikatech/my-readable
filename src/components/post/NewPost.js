@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import CategoryList from "../presentational/CategoryList";
+import CategoryList from "../../presentational/CategoryList";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
-import * as ReadableAPI from '../utils/ReadableAPI';
+import * as ReadableAPI from '../../utils/ReadableAPI';
 import generateUUID from 'uuid/v1';
-import {getSinglePost} from "../actions/postActions";
+import {getSinglePost} from "../../actions/post/postActions";
 
 /**
  * Represents the new post page as well as the editing post page
