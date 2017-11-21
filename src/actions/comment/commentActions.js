@@ -1,4 +1,4 @@
-import * as ReadableAPI from '../utils/ReadableAPI';
+import * as ReadableAPI from '../../utils/ReadableAPI';
 
 /**
  * update a comment after its edition
