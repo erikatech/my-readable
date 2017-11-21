@@ -11,7 +11,12 @@ const headers = {
 
 export const getCategories = () =>
   fetch(`${api}/categories`, {headers})
-	.then(res => res.json())
+	.then(res => {
+		if(!res.ok){
+			throw Error("Couldn't get the post");
+		}
+		return res.json();
+	})
 	.then(data => data.categories);
 
 export const getPostsFromCategory = (category) =>
