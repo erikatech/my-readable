@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
-import {doVoteRequest, getSinglePost, receiveSinglePost } from "../../actions/post/postActions";
+import {doVoteRequest, getSinglePost, receiveSinglePost, removePost} from "../../actions/post/postActions";
 import Post from "../post/Post";
 import SingleComment from "./SingleComment";
 import CommentForm from "./CommentForm";
@@ -15,8 +15,16 @@ class Comment extends Component {
 		// we get the postId from the params
 		const {postId} = this.props.match.params;
 		// fetch the post from the API, passing the postId from URL
-		this.props.getSinglePost(postId);
+		this.props.getSinglePost(postId).catch((err) => {
+            this.props.history.goBack(err)
+		});
 	}
+
+	onRemove = (post) => {
+		this.props.onRemove(post)
+			.then(() => this.props.history.goBack());
+
+	};
 
 	render() {
 		const {currentPost, comments} = this.props;
@@ -27,6 +35,7 @@ class Comment extends Component {
 					<Post showBody={true}
 					      post={currentPost}
 					      commentsCount={Object.keys(comments).length}
+						  onRemove={this.onRemove}
 					      onVote={(option) => this.props.onVote(option, currentPost)} />
 					<br/>
 
@@ -67,7 +76,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return {
 		getSinglePost: (postId) => dispatch(getSinglePost(postId)),
-		onVote: (option, post) => dispatch(doVoteRequest(post.id, option, receiveSinglePost))
+		onVote: (option, post) => dispatch(doVoteRequest(post.id, option, receiveSinglePost)),
+		onRemove: (post) => dispatch(removePost(post.id))
 	}
 }
 
