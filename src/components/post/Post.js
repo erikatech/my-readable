@@ -37,10 +37,7 @@ const Post = ({post, onVote, showBody, commentsCount, onRemove}) => {
 			  <div>
 				  <Link to={urlToComment}>{commentsCount !== undefined ? commentsCount : post.commentCount} comments </Link>
 				  <Link to={urlToEdit}>Edit</Link>
-
-				  {onRemove && (
-				    <button className="red-button" onClick={() => onRemove(post)}>Remove</button>
-				  )}
+				  <button className="red-button" onClick={() => onRemove(post)}>Remove</button>
 			  </div>
 		  </div>
 	  </div>
