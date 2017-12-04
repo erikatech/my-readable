@@ -3,6 +3,7 @@ import {withRouter} from "react-router";
 import {connect} from "react-redux";
 import {didVote, doVoteRequest, fetchPosts, fetchPostsByCategory, orderPosts, removePost} from "../../actions/post/postActions";
 import Post from "../post/Post";
+import {Link} from "react-router-dom";
 
 /**
  * Represents the main page
@@ -44,17 +45,25 @@ class Home extends Component {
 		const {posts, onRemove, onOrder, onVote} = this.props;
 		return (
 		  <div className="home-container">
-			  <div onChange={(e) => onOrder(e.target.value)} className="order-container">
-				  <input type="radio" value="voteScore" name="order" defaultChecked/> Upvoted
-				  <input type="radio" value="timestamp" name="order"/> Recently
-			  </div>
-			  {posts.map(post => (
-			    <Post key={post.id}
-			          post={post}
-			          onVote={onVote}
-			          onRemove={onRemove}
-			    />
-			  ))}
+			  {!posts.length && (
+				  <h3>No posts available. Go ahead and <Link to="/new">create</Link> one.</h3>
+			  )}
+
+			  {posts.length > 0 && (
+			  	<div>
+					<div onChange={(e) => onOrder(e.target.value)} className="order-container">
+						<input type="radio" value="voteScore" name="order" defaultChecked/> Upvoted
+						<input type="radio" value="timestamp" name="order"/> Recently
+					</div>
+                    {posts.map(post => (
+						<Post key={post.id}
+							  post={post}
+							  onVote={onVote}
+							  onRemove={onRemove}
+						/>
+                    ))}
+				</div>
+			  )}
 		  </div>
 		);
 	}
