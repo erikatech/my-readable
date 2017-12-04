@@ -45,9 +45,13 @@ export const getSinglePost = (postId) =>
 		if(!res.ok){
 			throw Error("Couldn't get the post");
 		}
+
 		return res.json();
 	})
-	.then(data => data);
+	.then(data => {
+		if(!Object.keys(data).length) throw Error("The post you're asking does not exist anymore");
+		return data;
+	});
 
 
 export const getComments = (postId) =>
