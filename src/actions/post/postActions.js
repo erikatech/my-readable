@@ -154,7 +154,7 @@ export function getSinglePost(postId) {
 			  dispatch(receiveSinglePost(post));
 			  dispatch(getComments(post.id))
 		  }).catch(() => {
-			    dispatch(push(`/`));
+				throw Error("The requested post doesn't exist");
 		  })
 	}
 }
