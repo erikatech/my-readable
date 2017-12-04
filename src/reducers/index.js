@@ -124,7 +124,7 @@ function category(state = {
 				isFetching: true
 
 			};
-		case "RECEIVE_CATEGORIES":
+		case "FETCH_CATEGORIES_SUCCESS":
 			return {
 				...state,
 				isFetching: false,
@@ -134,6 +134,7 @@ function category(state = {
 			return state;
 	}
 }
+
 
 export default combineReducers({
 	post: post,
